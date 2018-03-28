@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <title>Ybblog</title>
+</head>
+<body>  
+        {% include "includes/navbar.html" %}
+
+        
+
+        <div style = "margin-top : 100px; margin-bottom:100px;" class = "container">
+                
+            {% if messages %}
+                
+                    {% for message in messages %}
+                    {% if message.tags == "info" %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                    {% else %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+
+                    {% endif %}
+
+
+                    {% endfor %}
+                
+                {% endif %}
+            {% block body %}
+            
+            {% endblock body %}
+
+        </div>
+    
+
+      <script src="{% static 'js/bootstrap.min.js'%}"></script>  
+      <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>  
+      <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  
+    </body>
+</html>

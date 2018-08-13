@@ -3,7 +3,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="{% url 'index'  %}">YB Blog</a>
-        
+
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -12,7 +12,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'article:articles'  %}">Makaleler</a>
             </li>
-            
+
           </ul>
 
           <ul class="navbar-nav ml-auto">
@@ -28,13 +28,13 @@
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'user:login'  %}">Giriş Yap</a>
           </li>
-          {% endif %}
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'user:register'  %}">Kayıt Ol</a>
           </li>
-          
+          {% endif %}
+
           </ul>
         </div>
-    
-    
+
+
 </nav>

@@ -16,6 +16,9 @@ class ArticleAdmin(admin.ModelAdmin):
     search_fields = ["title"]
 
     list_filter = ["created_date"]
+
+    prepopulated_fields = {'slug':('title',)} 
+
     class Meta:
         model = Article
 

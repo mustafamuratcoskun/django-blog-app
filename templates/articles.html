@@ -35,7 +35,7 @@
     <div class="col-lg-8">
 
       <!-- Title -->
-      <a href="{% url 'article:detail' article.id %}"><h2 class="mt-4">{{article.title}}</h2></a> 
+      <a href="{% url 'article:detail' article.slug %}"><h2 class="mt-4">{{article.title}}</h2></a> 
         
       <!-- Author -->
       <p class="lead">
@@ -50,7 +50,7 @@
       <hr>
       <!-- Preview Image -->
       {% if article.article_image %}
-      <a href="{% url 'article:detail' article.id %}"><img class="img-fluid rounded" src="{{article.article_image.url}}" alt=""></a>
+      <a href="{% url 'article:detail' article.slug %}"><img class="img-fluid rounded" src="{{article.article_image.url}}" alt=""></a>
       {% endif %}
      
 
@@ -61,7 +61,7 @@
           {{article.content|safe|truncatewords:50}}
       </p>
 
-      <a style ="float : right;" href="{% url 'article:detail' article.id %}" class ="btn btn-danger">Devamını Oku</a>
+      <a href="{% url 'article:detail' article.slug %}" class ="btn btn-danger my-3">Devamını Oku</a>
       <hr>
          
         </div>

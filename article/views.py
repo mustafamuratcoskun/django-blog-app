@@ -2,8 +2,9 @@ from django.shortcuts import render,HttpResponse,redirect,get_object_or_404,reve
 from .forms import ArticleForm
 from .models import Article,Comment
 from django.contrib import messages
+from django.template.defaultfilters import slugify
+from django.db.models import Count
 from django.contrib.auth.decorators import login_required
-# Create your views here.
 
 def articles(request):
     keyword = request.GET.get("keyword")
@@ -32,23 +33,22 @@ def addArticle(request):
 
     if form.is_valid():
         article = form.save(commit=False)
-        
+        article.slug = slugify(article.title)
         article.author = request.user
         article.save()
 
         messages.success(request,"Makale başarıyla oluşturuldu")
         return redirect("article:dashboard")
     return render(request,"addarticle.html",{"form":form})
-def detail(request,id):
+def detail(request,slug):
     #article = Article.objects.filter(id = id).first()   
-    article = get_object_or_404(Article,id = id)
-
+    article = get_object_or_404(Article, slug=slug)
     comments = article.comments.all()
-    return render(request,"detail.html",{"article":article,"comments":comments})
+    return render(request,"detail.html",{"article":article,"comments":comments })
 @login_required(login_url = "user:login")
-def updateArticle(request,id):
+def updateArticle(request, slug):
 
-    article = get_object_or_404(Article,id = id)
+    article = get_object_or_404(Article, slug=slug)
     form = ArticleForm(request.POST or None,request.FILES or None,instance = article)
     if form.is_valid():
         article = form.save(commit=False)
@@ -62,16 +62,16 @@ def updateArticle(request,id):
 
     return render(request,"update.html",{"form":form})
 @login_required(login_url = "user:login")
-def deleteArticle(request,id):
-    article = get_object_or_404(Article,id = id)
+def deleteArticle(request,slug):
+    article = get_object_or_404(Article,slug=slug)
 
     article.delete()
 
     messages.success(request,"Makale Başarıyla Silindi")
 
     return redirect("article:dashboard")
-def addComment(request,id):
-    article = get_object_or_404(Article,id = id)
+def addComment(request,slug):
+    article = get_object_or_404(Article, slug=slug)
 
     if request.method == "POST":
         comment_author = request.POST.get("comment_author")
@@ -82,5 +82,5 @@ def addComment(request,id):
         newComment.article = article
 
         newComment.save()
-    return redirect(reverse("article:detail",kwargs={"id":id}))
+    return redirect(reverse("article:detail",kwargs={"slug":slug}))
     
